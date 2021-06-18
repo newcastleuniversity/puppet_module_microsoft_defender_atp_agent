@@ -1,117 +1,65 @@
 # ms_defender_atp_agent
 
-Welcome to your new module. A short overview of the generated parts can be found
-in the [PDK documentation][1].
-
-The README template below provides a starting point with details about what
-information to include in your README.
-
 ## Table of Contents
 
 1. [Description](#description)
-1. [Setup - The basics of getting started with ms_defender_atp_agent](#setup)
-    * [What ms_defender_atp_agent affects](#what-ms_defender_atp_agent-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with ms_defender_atp_agent](#beginning-with-ms_defender_atp_agent)
+1. [Beginning with ms_defender_atp_agent](#beginning-with-ms_defender_atp_agent)
+   * [Soft dependencies](#soft-dependencies)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Limitations - OS compatibility, etc.](#limitations)
 1. [Development - Guide for contributing to the module](#development)
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your
-module does and what kind of problems users can solve with it.
+  Installs the Microsoft Defender for Endpoint agent (herein, "the agent") onto supported GNU/Linux systems.  Attempts to automate many of the steps in the [official MS Defender Puppet documentation][1].
 
-This should be a fairly short description helps the user decide if your module
-is what they want.
+##  Beginning with ms_defender_atp_agent
 
-## Setup
+You will need to get the "onboarding package" from whoever is responsible for managing the Microsoft Defender for Endpoint subscription for your site and put the JSON file that it contains somewhere that Puppet agents can see it. The location of this JSON file is a parameter for this module.
 
-### What ms_defender_atp_agent affects **OPTIONAL**
+### Soft dependencies
 
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
-
-If there's more that they should know about, though, this is the place to
-mention:
-
-* Files, packages, services, or operations that the module will alter, impact,
-  or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with ms_defender_atp_agent
-
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most basic
-use of the module.
+* On Debian and derivatives, you need the *puppetlabs/apt* module.
+* On RedHat and derivatives, you need the *puppetlabs/yumrepo_core* module.
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your
-users how to use your module to solve problems, and be sure to include code
-examples. Include three to five examples of the most important or common tasks a
-user can accomplish with your module. Show users how to accomplish more complex
-tasks that involve different types, classes, and functions working in tandem.
+### Installation and configuration of the agent with "roles and profiles" pattern
 
-## Reference
+[Roles and profiles primer][1] for the unfamiliar.
 
-This section is deprecated. Instead, add reference information to your code as
-Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your
-module. For details on how to add code comments and generate documentation with
-Strings, see the [Puppet Strings documentation][2] and [style guide][3].
+In *yourcontrolrepo/Puppetfile*, add an entry to include this repo as a Puppet module.
 
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the
-root of your module directory and list out each of your module's classes,
-defined types, facts, functions, Puppet tasks, task plans, and resource types
-and providers, along with the parameters for each.
+In *yourcontrolrepo/site/profiles*, say `pdk new class my_defender_agent` (or whatever name you find useful).
 
-For each element (class, defined type, function, and so on), list:
+Drop the *mdatp_onboard.json* file into *yourcontrolrepo/site/profiles/files/mdatp_onboard.json* (or a sub-folder of *files* if you find that useful).
 
-* The data type, if applicable.
-* A description of what the element does.
-* Valid values, if the data type doesn't make it obvious.
-* Default value, if any.
-
-For example:
+*my_defender_atp.pp* should say something like:
 
 ```
-### `pet::cat`
+class { ms_defender_atp_agent: onboarding_json_file => 'puppet:///modules/my_defender_agent/mtapd_onboard.json' }
+```
 
-#### Parameters
+Then your roles classes just say `include my_defender_agent`.
 
-##### `meow`
+### Uninstallation of the agent
 
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
+```
+class { ms_defender_atp_agent: ensure => false }
 ```
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other
-warnings.
+
 
 ## Development
 
 In the Development section, tell other users the ground rules for contributing
 to your project and how they should submit their work.
 
-## Release Notes/Contributors/Etc. **Optional**
+## Release Notes/Contributors/Etc.
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel are
-necessary or important to include here. Please use the `##` header.
+Based on code samples made by [Microsoft][2].
 
-[1]: https://puppet.com/docs/pdk/latest/pdk_generating_modules.html
-[2]: https://puppet.com/docs/puppet/latest/puppet_strings.html
-[3]: https://puppet.com/docs/puppet/latest/puppet_strings_style.html
+[1]: https://puppet.com/docs/pe/2019.8/osp/the_roles_and_profiles_method.html
+[2]: https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/linux-install-with-puppet

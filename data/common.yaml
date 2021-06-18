@@ -1,1 +1,9 @@
---- {}
+---
+
+ms_defender_atp_agent::default_version: nonesuch
+ms_defender_atp_agent::default_distro: nonesuch
+ms_defender_atp_agent::default_channel: prod
+ms_defender_atp_agent::default_ensure: true
+ms_defender_atp_agent::default_manage_sources: true
+ms_defender_atp_agent::default_onboarding_json_file: /dev/null  # the placeholder value has to match the specified type
+ms_defender_atp_agent::calculated_distro: nonesuch
