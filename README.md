@@ -54,12 +54,27 @@ class { ms_defender_atp_agent: ensure => false }
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing
-to your project and how they should submit their work.
+How to contribute to this repo:
+- Raise bug reports in the issue page,
+  - that contain what Puppet version you were using, what supporting modules and their versions, your manifest, etc,
+  - that show what you expected to see versus what you actually saw.
+- Request features in the issue page,
+  - that state a clear user story for the new feature.
+- Submit pull requests,
+  - with unit tests,
+  - with a clear statement of what the PR adds or fixes.
+- For the above, be civil.
+  - Don't harass people on the basis of actual or perceived [age, disability, gender reassignment, marriage or civil partnership, pregnancy or maternity, race, religion or belief, sex, or sexual orientation][2].
+  - Presume good faith because second-language English speakers and some neurological conditions (e.g. autism) can seem rude without meaning to.
+  - If you think @threepistons (project owner) has been uncivil, please ping @ChrisRitson. TODO check that Chris is OK with this continuing post-Evolution.
+- For the above, give a name you are willing to be known as in the Contributors list, unless you are happy for me to glean it from your GitHub profile card.
 
 ## Release Notes/Contributors/Etc.
 
-Based on code samples made by [Microsoft][2].
+Based on code samples made by [Microsoft][3].
+
+### Contributors
 
 [1]: https://puppet.com/docs/pe/2019.8/osp/the_roles_and_profiles_method.html
-[2]: https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/linux-install-with-puppet
+[2]: https://www.legislation.gov.uk/ukpga/2010/15/section/4/enacted
+[3]: https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/linux-install-with-puppet
