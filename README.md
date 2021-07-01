@@ -45,7 +45,7 @@ Then your roles classes just say `include my_defender_agent`.
 ### Uninstallation of the agent and onboarding file
 
 ```
-include ms_defender_atp_agent::uninstall }
+include ms_defender_atp_agent::uninstall
 ```
 
 ## Limitations
@@ -62,7 +62,7 @@ How to contribute to this repo:
   - that state a clear user story for the new feature.
 - Submit pull requests,
   - with exhaustive tests,
-    - with all instances of `it { pp catalogue.resources }` removed or commented out, it's really useful but also really noisy,
+  - with all instances of `it { pp catalogue.resources }` removed or commented out, it's really useful but also really noisy,
   - with new classes and parameters documented and then run `puppet strings generate --format=markdown`,
   - with a clear statement of what the PR adds or fixes.
 - For the above, be civil.
