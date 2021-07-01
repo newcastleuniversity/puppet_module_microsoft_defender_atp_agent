@@ -8,45 +8,41 @@
 
 #### Public Classes
 
-* [`ms_defender_atp_agent`](#ms_defender_atp_agent): Puppet manifest to install Microsoft Defender for Endpoint on Linux.
-* [`ms_defender_atp_agent::install`](#ms_defender_atp_agentinstall)
+* [`ms_defender_atp_agent`](#ms_defender_atp_agent): Puppet module to install Microsoft Defender for Endpoint on Linux.
+* [`ms_defender_atp_agent::uninstall`](#ms_defender_atp_agentuninstall): Uninstalls MS Defender ATP agent, removes onboarding file
 
 #### Private Classes
 
-* `ms_defender_atp_agent::sources`: A short summary of the purpose of this class
+* `ms_defender_atp_agent::config`: This installs the "onboarding" file, aka your Defender site licence.
+* `ms_defender_atp_agent::install`: Install MDATP package
+* `ms_defender_atp_agent::sources`: This sets up the Apt or Yum sources so that your computer or server can install Defender.
 
 ## Classes
 
 ### <a name="ms_defender_atp_agent"></a>`ms_defender_atp_agent`
 
-Puppet manifest to install Microsoft Defender for Endpoint on Linux.
+Puppet module to install Microsoft Defender for Endpoint on Linux.
+
+* **See also**
+  * https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/linux-install-with-puppet?view=o365-worldwide#contents-of-install_mdatpmanifestsinitpp
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'ms_defender_atp_agent': onboarding_json_file => 'puppet:///path/to/your/file.json' }
+```
 
 #### Parameters
 
 The following parameters are available in the `ms_defender_atp_agent` class:
 
-* [`ensure`](#ensure)
-* [`channel`](#channel)
 * [`onboarding_json_file`](#onboarding_json_file)
+* [`channel`](#channel)
 * [`manage_sources`](#manage_sources)
 * [`distro`](#distro)
 * [`version`](#version)
-
-##### <a name="ensure"></a>`ensure`
-
-Data type: `Boolean`
-
-False uninstalls the agent, true installs it. Note: false does not remove repositories nor the onboarding file at this time.
-
-Default value: `lookup('ms_defender_atp_agent::default_ensure')`
-
-##### <a name="channel"></a>`channel`
-
-Data type: `Enum['prod','insiders-fast','insiders-slow']`
-
-The release channel based on your environme
-
-Default value: `lookup('ms_defender_atp_agent::default_channel')`
 
 ##### <a name="onboarding_json_file"></a>`onboarding_json_file`
 
@@ -54,47 +50,47 @@ Data type: `Stdlib::Filesource`
 
 Path to the JSON file you extracted from the onboarding package that your Defender manager gave you.
 
-Default value: `lookup('ms_defender_atp_agent::default_onboarding_json_file')`
+##### <a name="channel"></a>`channel`
+
+Data type: `Optional[Enum['prod','insiders-fast','insiders-slow']]`
+
+The release channel you want to use.
+
+Default value: `lookup('ms_defender_atp_agent::default_channel')`
 
 ##### <a name="manage_sources"></a>`manage_sources`
 
-Data type: `Boolean`
+Data type: `Optional[Boolean]`
 
-Allows you to manage the repository sources yourself (false) or allow this module to manage them for you.
+Allows you to manage the repository sources yourself (false) or allow this module to manage them for you (true).
 
 Default value: `lookup('ms_defender_atp_agent::default_manage_sources')`
 
 ##### <a name="distro"></a>`distro`
 
-Data type: `String`
+Data type: `Optional[String]`
 
+Allows you to override the distro MS think you should claim to have to get the right package. I try to calculate this for you in Hiera.
 
-
-Default value: `lookup('ms_defender_atp_agent::default_distro')`
+Default value: `lookup('ms_defender_atp_agent::default_distro' )`
 
 ##### <a name="version"></a>`version`
 
-Data type: `String`
+Data type: `Optional[String]`
 
+Allows you to override the distro version you claim to have to get the right package.
 
+Default value: `$::facts['os']['release']['major']`
 
-Default value: `lookup('ms_defender_atp_agent::default_version')`
+### <a name="ms_defender_atp_agentuninstall"></a>`ms_defender_atp_agent::uninstall`
 
-### <a name="ms_defender_atp_agentinstall"></a>`ms_defender_atp_agent::install`
+Uninstalls MS Defender ATP agent, removes onboarding file
 
-The ms_defender_atp_agent::install class.
+#### Examples
 
-#### Parameters
+##### 
 
-The following parameters are available in the `ms_defender_atp_agent::install` class:
-
-* [`ensure`](#ensure)
-
-##### <a name="ensure"></a>`ensure`
-
-Data type: `Boolean`
-
-
-
-Default value: ``true``
+```puppet
+include ms_defender_atp_agent::uninstall
+```
 

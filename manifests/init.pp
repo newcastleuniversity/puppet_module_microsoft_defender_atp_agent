@@ -1,70 +1,55 @@
-# @summary Puppet manifest to install Microsoft Defender for Endpoint on Linux.
+# @summary Puppet module to install Microsoft Defender for Endpoint on Linux.
 #
-# @param ensure False uninstalls the agent, true installs it. Note: false does not remove repositories nor the onboarding file at this time.
-# @param channel The release channel based on your environme
 # @param onboarding_json_file Path to the JSON file you extracted from the onboarding package that your Defender manager gave you.
-# @param manage_sources Allows you to manage the repository sources yourself (false) or allow this module to manage them for you.
+# @param channel The release channel you want to use.
+# @param manage_sources Allows you to manage the repository sources yourself (false) or allow this module to manage them for you (true).
+# @param distro Allows you to override the distro MS think you should claim to have to get the right package. I try to calculate this for you in Hiera.
+# @param version Allows you to override the distro version you claim to have to get the right package.
 #
-# @examp
-#   class { 'ms_defender_atp_agent': onboarding_json_file => /path/to/your/file.json } # instal
-#   class { 'ms_defender_atp_agent': ensure => false } # remov
+# @see https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/linux-install-with-puppet?view=o365-worldwide#contents-of-install_mdatpmanifestsinitpp
+#
+# @api public
+#
+# @example
+#   class { 'ms_defender_atp_agent': onboarding_json_file => 'puppet:///path/to/your/file.json' }
 #
 class ms_defender_atp_agent (
-  Boolean $ensure                                       = lookup('ms_defender_atp_agent::default_ensure'),
-  String $distro                                        = lookup('ms_defender_atp_agent::default_distro'),
-  String $version                                       = lookup('ms_defender_atp_agent::default_version'),
-  Enum['prod','insiders-fast','insiders-slow'] $channel = lookup('ms_defender_atp_agent::default_channel'),
-  Stdlib::Filesource $onboarding_json_file              = lookup('ms_defender_atp_agent::default_onboarding_json_file'),
-  Boolean $manage_sources                               = lookup('ms_defender_atp_agent::default_manage_sources')
+  # Automatic parameter lookup never works for me so I used lookup(), which also lets me do these very obvious defaults-with-overrides.
+  Stdlib::Filesource $onboarding_json_file,
+  # If default_distro isn't in the module Hiera, compilation should fail
+  Optional[String] $distro                                        = lookup('ms_defender_atp_agent::default_distro' ),
+  Optional[String] $version                                       = $::facts['os']['release']['major'],
+  Optional[Enum['prod','insiders-fast','insiders-slow']] $channel = lookup('ms_defender_atp_agent::default_channel'), # prod
+  Optional[Boolean] $manage_sources                               = lookup('ms_defender_atp_agent::default_manage_sources') # true
 ) {
 
-  # I run a lot of armhf Pis and this endpoint thing won't work on them because the
-  # packages only come as amd64, so filter out non-amd64 architectures.
+  # I run a lot of armhf Pis and this endpoint agent won't work on them because the
+  # packages only come as amd64, so I filter out non-amd64 architectures.
+  # The Power9 nodes in the HPC won't run the agent either.
   # @see https://packages.microsoft.com/debian/10/prod/pool/main/m/mdatp/
   if !($::facts['os']['architecture'] in ['amd64','x86_64']) { # This horrible conditional because RedHat calls amd64 x86_64
     fail("Microsoft make no Defender agent for ${::facts['os']['architecture']}.")
   } # No "else"" needed because "fail" halts compilation.
 
-  case $ensure {
+  contain ms_defender_atp_agent::sources
+  contain ms_defender_atp_agent::config
+  contain ms_defender_atp_agent::install
 
-    false:   { # Get the uninstaller out of the way early in the code
+  case $manage_sources {
 
-      class { 'ms_defender_atp_agent::install': ensure => false }
+    false: {
+
+      Class[ms_defender_atp_agent::config]
+      ~> Class[ms_defender_atp_agent::install]
 
     }
 
     default: {
 
-      if $onboarding_json_file == '/dev/null' {
-        fail('Supply the Defender onboarding package for your site, see README.md for details')
-      }
+      Class[ms_defender_atp_agent::sources]
+      ~> Class[ms_defender_atp_agent::config]
+      ~> Class[ms_defender_atp_agent::install]
 
-      contain ms_defender_atp_agent::config
-      contain ms_defender_atp_agent::install
-
-      case $manage_sources {
-
-        false: {
-
-          Class['ms_defender_atp_agent::config']
-          ~> Class['ms_defender_atp_agent::install']
-
-        }
-
-        default: {
-
-          class { 'ms_defender_atp_agent::sources':
-            distro  => $distro,
-            version => $version,
-            channel => $version,
-          }
-
-          ~> Class['ms_defender_atp_agent::config']
-          ~> Class['ms_defender_atp_agent::install']
-
-        }
-
-      }
     }
 
   }

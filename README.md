@@ -42,15 +42,15 @@ class { ms_defender_atp_agent: onboarding_json_file => 'puppet:///modules/my_def
 
 Then your roles classes just say `include my_defender_agent`.
 
-### Uninstallation of the agent
+### Uninstallation of the agent and onboarding file
 
 ```
-class { ms_defender_atp_agent: ensure => false }
+include ms_defender_atp_agent::uninstall }
 ```
 
 ## Limitations
 
-
+It doesn't support any GNU/Linux distributions that I don't support in my job. Pull requests are welcome as long as you have written exhaustive RSpec tests.
 
 ## Development
 
@@ -61,10 +61,12 @@ How to contribute to this repo:
 - Request features in the issue page,
   - that state a clear user story for the new feature.
 - Submit pull requests,
-  - with unit tests,
+  - with exhaustive tests,
+    - with all instances of `it { pp catalogue.resources }` removed or commented out, it's really useful but also really noisy,
+  - with new classes and parameters documented and then run `puppet strings generate --format=markdown`,
   - with a clear statement of what the PR adds or fixes.
 - For the above, be civil.
-  - Don't harass people.
+  - Don't harass people nor be intentionally rude.
   - Don't treat people unfairly on the basis of actual or perceived [age, disability, gender reassignment, marriage or civil partnership, pregnancy or maternity, race, religion or belief, sex, or sexual orientation][2].
   - Presume good faith because second-language English speakers and some neurological conditions (e.g. autism) can seem rude without meaning to.
   - If you think @threepistons (project owner) has been uncivil, please ping @ChrisRitson. TODO check that Chris is OK with this continuing post-Evolution.

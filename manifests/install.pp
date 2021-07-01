@@ -1,19 +1,13 @@
-# @summary Install or uninstall Defender agent
+# @summary Install MDATP package
 #
 # @api private
+#
+class ms_defender_atp_agent::install {
 
-class ms_defender_atp_agent::install (
-  Boolean $ensure = true,
-) {
+    $p = lookup('ms_defender_atp_agent::package_name')
 
-  if $ensure == false {
-
-    package { 'mdatp': ensure => 'purged' }
-
-  } else {
-
-    package { 'mdatp': ensure => 'latest' }
-
-  }
+    package { $p :
+      ensure => latest,
+    }
 
 }
