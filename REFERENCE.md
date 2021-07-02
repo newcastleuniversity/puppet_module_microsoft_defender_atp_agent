@@ -70,9 +70,9 @@ Default value: `lookup('ms_defender_atp_agent::default_manage_sources')`
 
 Data type: `Optional[String]`
 
-Allows you to override the distro MS think you should claim to have to get the right package. I try to calculate this for you in Hiera.
+Allows you to override the distro MS say you should state to get the right package. I calculate this for you in Hiera.
 
-Default value: `lookup('ms_defender_atp_agent::default_distro' )`
+Default value: `lookup('ms_defender_atp_agent::default_distro')`
 
 ##### <a name="version"></a>`version`
 

@@ -4,23 +4,31 @@
 
 1. [Description](#description)
 1. [Beginning with ms_defender_atp_agent](#beginning-with-ms_defender_atp_agent)
-   * [Soft dependencies](#soft-dependencies)
+   - [Soft dependencies](#soft-dependencies)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Limitations - OS compatibility, etc.](#limitations)
 1. [Development - Guide for contributing to the module](#development)
 
 ## Description
 
-  Installs the Microsoft Defender for Endpoint agent (herein, "the agent") onto supported GNU/Linux systems.  Attempts to automate many of the steps in the [official MS Defender Puppet documentation][1].
+Installs the Microsoft Defender for Endpoint agent (herein, "the agent") onto supported GNU/Linux systems.  Attempts to automate many of the steps in the [official MS Defender Puppet documentation][1].
+
+Features include:
+- Each Puppet run starts the agent service if, for some reason, it has stopped.
+- Two custom facts, *mdatp_is_healthy* and *mdatp_is_licensed*, that show up in your Foreman (or similar) dashboard so you can monitor the agent across your fleet.
+- Customisable parameters as outlined in [REFERENCE.md](REFERENCE.md).
+- An uninstaller class.
 
 ##  Beginning with ms_defender_atp_agent
 
-You will need to get the "onboarding package" from whoever is responsible for managing the Microsoft Defender for Endpoint subscription for your site and put the JSON file that it contains somewhere that Puppet agents can see it. The location of this JSON file is a parameter for this module.
+You will need to get the "onboarding package" from whoever is responsible for managing the Microsoft Defender for Endpoint subscription for your site and put the JSON file that it generates somewhere that Puppet agents can see it. The location of this JSON file is a parameter for this module.
+
+The package I got contained a Python file that generated the JSON file. 
 
 ### Soft dependencies
 
-* On Debian and derivatives, you need the *puppetlabs/apt* module.
-* On RedHat and derivatives, you need the *puppetlabs/yumrepo_core* module.
+- On Debian and derivatives, you need the *puppetlabs/apt* module.
+- On RedHat and derivatives, you need the *puppetlabs/yumrepo_core* module.
 
 ## Usage
 
@@ -37,7 +45,7 @@ Drop the *mdatp_onboard.json* file into *yourcontrolrepo/site/profiles/files/mda
 *my_defender_atp.pp* should say something like:
 
 ```
-class { ms_defender_atp_agent: onboarding_json_file => 'puppet:///modules/my_defender_agent/mtapd_onboard.json' }
+class { ms_defender_atp_agent: onboarding_json_file => 'puppet:///modules/profiles/mtapd_onboard.json' }
 ```
 
 Then your roles classes just say `include my_defender_agent`.
