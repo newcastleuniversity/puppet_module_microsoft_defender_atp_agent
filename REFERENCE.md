@@ -48,7 +48,7 @@ The following parameters are available in the `ms_defender_atp_agent` class:
 
 Data type: `Stdlib::Filesource`
 
-Path to the JSON file you extracted from the onboarding package that your Defender manager gave you.
+Source (as in *file* resource attribute called *source*) of the JSON file you extracted from the onboarding package that your Defender manager gave you.
 
 ##### <a name="channel"></a>`channel`
 
