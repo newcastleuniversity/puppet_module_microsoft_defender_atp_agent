@@ -6,8 +6,15 @@ class ms_defender_atp_agent::install {
 
     $p = lookup('ms_defender_atp_agent::package_name')
 
-    package { $p :
+    package { $p:
       ensure => latest,
+    }
+    # This service is installed and started by the package.
+    # The service resource here force starts and force enables the service,
+    # in case the machine user decides to turn it off.
+    -> service { $p:
+      ensure => running,
+      enable => true,
     }
 
 }
