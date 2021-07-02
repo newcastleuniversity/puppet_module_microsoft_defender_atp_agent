@@ -66,10 +66,10 @@ How to contribute to this repo:
   - with new classes and parameters documented and then run `puppet strings generate --format=markdown`,
   - with a clear statement of what the PR adds or fixes.
 - For the above, be civil.
-  - Don't harass people nor be intentionally rude.
+  - Don't harass people nor call them names.
   - Don't treat people unfairly on the basis of actual or perceived [age, disability, gender reassignment, marriage or civil partnership, pregnancy or maternity, race, religion or belief, sex, or sexual orientation][2].
-  - Presume good faith because second-language English speakers and some neurological conditions (e.g. autism) can seem rude without meaning to.
-  - If you think @threepistons (project owner) has been uncivil, please ping @ChrisRitson. TODO check that Chris is OK with this continuing post-Evolution.
+  - Incivility can be highlighted to @threepistons (project owner) by @-mentioning me. I will consider barring the uncivil person from contributing, especially if they are persistent in being uncivil.
+  - If you think @threepistons (project owner) has been uncivil, please @-mention @ChrisRitson. TODO check that Chris is OK with this continuing post-Evolution.
 - For the above, give a name you are willing to be known as in the Contributors list, unless you are happy for me to glean it from your GitHub profile card.
 
 ## Release Notes/Contributors/Etc.

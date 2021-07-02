@@ -3,7 +3,7 @@
 # @param onboarding_json_file Path to the JSON file you extracted from the onboarding package that your Defender manager gave you.
 # @param channel The release channel you want to use.
 # @param manage_sources Allows you to manage the repository sources yourself (false) or allow this module to manage them for you (true).
-# @param distro Allows you to override the distro MS think you should claim to have to get the right package. I try to calculate this for you in Hiera.
+# @param distro Allows you to override the distro MS say you should state to get the right package. I calculate this for you in Hiera.
 # @param version Allows you to override the distro version you claim to have to get the right package.
 #
 # @see https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/linux-install-with-puppet?view=o365-worldwide#contents-of-install_mdatpmanifestsinitpp
@@ -17,7 +17,7 @@ class ms_defender_atp_agent (
   # Automatic parameter lookup never works for me so I used lookup(), which also lets me do these very obvious defaults-with-overrides.
   Stdlib::Filesource $onboarding_json_file,
   # If default_distro isn't in the module Hiera, compilation should fail
-  Optional[String] $distro                                        = lookup('ms_defender_atp_agent::default_distro' ),
+  Optional[String] $distro                                        = lookup('ms_defender_atp_agent::default_distro'),
   Optional[String] $version                                       = $::facts['os']['release']['major'],
   Optional[Enum['prod','insiders-fast','insiders-slow']] $channel = lookup('ms_defender_atp_agent::default_channel'), # prod
   Optional[Boolean] $manage_sources                               = lookup('ms_defender_atp_agent::default_manage_sources') # true
