@@ -1,6 +1,6 @@
 # @summary Puppet module to install Microsoft Defender for Endpoint on Linux.
 #
-# @param onboarding_json_file Path to the JSON file you extracted from the onboarding package that your Defender manager gave you.
+# @param onboarding_json_file Source (as in *file* resource attribute called *source*) of the JSON file you extracted from the onboarding package that your Defender manager gave you.
 # @param channel The release channel you want to use.
 # @param manage_sources Allows you to manage the repository sources yourself (false) or allow this module to manage them for you (true).
 # @param distro Allows you to override the distro MS say you should state to get the right package. I calculate this for you in Hiera.

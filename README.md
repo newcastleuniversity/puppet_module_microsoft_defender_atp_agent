@@ -42,7 +42,7 @@ In *yourcontrolrepo/site/profiles*, say `pdk new class my_defender_agent` (or wh
 
 Drop the *mdatp_onboard.json* file into *yourcontrolrepo/site/profiles/files/mdatp_onboard.json* (or a sub-folder of *files* if you find that useful).
 
-*my_defender_atp.pp* should say something like:
+*my_defender_agent.pp* should say something like:
 
 ```
 class { ms_defender_atp_agent: onboarding_json_file => 'puppet:///modules/profiles/mtapd_onboard.json' }
