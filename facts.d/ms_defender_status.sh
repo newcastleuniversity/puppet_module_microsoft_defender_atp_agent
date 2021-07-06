@@ -1,11 +1,27 @@
 #!/bin/bash
 
-HEALTH=$(mdatp health --field healthy)
+which mdatp > /dev/null
 
-if [ $? == 0 ]
-  then LICENSE=$(mdatp health --field licensed)
-  else LICENSE='MDATP service is poorly'
+if [ $? != 0 ]
+  then echo mdatp_is_installed=false
+  exit 0
 fi
 
-echo mdatp_is_healthy=$HEALTH
-echo mdatp_is_licensed=$LICENSE
+HEALTHY=$(mdatp health --field healthy)
+
+if [ $HEALTHY != 'true' ]
+# the exit codes of mdatp are not documented, the textual output is
+  then echo mdatp_is_healthy=false
+  exit 0
+fi
+
+LICENCED = $(mdatp health --field licensed)
+
+if [ $LICENCED != 'true ' ]
+  then echo mdatp_is_licensed=false
+  exit 0
+if
+
+echo mdatp_is_installed=true
+echo mdatp_is_healthy=true
+echo mdatp_is_licensed=true
