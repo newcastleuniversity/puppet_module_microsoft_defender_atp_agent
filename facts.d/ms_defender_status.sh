@@ -1,6 +1,6 @@
 #!/bin/bash
 
-which mdatp > /dev/null
+which mdatp &> /dev/null
 
 if [ $? != 0 ]
   then echo mdatp_is_installed=false
@@ -15,12 +15,12 @@ if [ $HEALTHY != 'true' ]
   exit 0
 fi
 
-LICENCED = $(mdatp health --field licensed)
+LICENSED=$(mdatp health --field licensed)
 
-if [ $LICENCED != 'true ' ]
+if [ $LICENSED != 'true' ]
   then echo mdatp_is_licensed=false
   exit 0
-if
+fi
 
 echo mdatp_is_installed=true
 echo mdatp_is_healthy=true
