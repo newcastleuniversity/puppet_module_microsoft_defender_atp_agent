@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'ms_defender_atp_agent' do
+describe 'microsoft_defender_atp_agent' do
   context 'should fail on Pis by default' do
     let(:facts) do
       {
@@ -30,7 +30,7 @@ describe 'ms_defender_atp_agent' do
 
       # it { pp catalogue.resources }
       it { is_expected.to compile.with_all_deps }
-      it { is_expected.to contain_class('ms_defender_atp_agent::sources') }
+      it { is_expected.to contain_class('microsoft_defender_atp_agent::sources') }
     end
 
     context "invalid release on #{os}" do

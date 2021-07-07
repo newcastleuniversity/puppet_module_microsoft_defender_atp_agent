@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'ms_defender_atp_agent::uninstall' do
+describe 'microsoft_defender_atp_agent::uninstall' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

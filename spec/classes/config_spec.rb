@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-describe 'ms_defender_atp_agent::config' do
-  let(:pre_condition) { 'class { ms_defender_atp_agent: onboarding_json_file => "puppet:///modules/my_defender_agent/mtapd_onboard.json"}' }
+describe 'microsoft_defender_atp_agent::config' do
+  let(:pre_condition) { 'class { microsoft_defender_atp_agent: onboarding_json_file => "puppet:///modules/my_defender_agent/mtapd_onboard.json"}' }
 
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do

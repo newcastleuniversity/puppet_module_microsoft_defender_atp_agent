@@ -1,9 +1,9 @@
-# ms_defender_atp_agent
+# microsoft_defender_atp_agent
 
 ## Table of Contents
 
 1. [Description](#description)
-1. [Beginning with ms_defender_atp_agent](#beginning-with-ms_defender_atp_agent)
+1. [Beginning with microsoft_defender_atp_agent](#beginning-with-microsoft_defender_atp_agent)
    - [Soft dependencies](#soft-dependencies)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Limitations - OS compatibility, etc.](#limitations)
@@ -19,7 +19,7 @@ Features include:
 - Customisable parameters as outlined in [REFERENCE.md](REFERENCE.md).
 - An uninstaller class.
 
-##  Beginning with ms_defender_atp_agent
+##  Beginning with microsoft_defender_atp_agent
 
 You will need to get the "onboarding package" from whoever is responsible for managing the Microsoft Defender for Endpoint subscription for your site and put the JSON file that it generates somewhere that Puppet agents can see it. The location of this JSON file is a parameter for this module.
 
@@ -45,7 +45,7 @@ Drop the *mdatp_onboard.json* file into *yourcontrolrepo/site/profiles/files/mda
 *my_defender_agent.pp* should say something like:
 
 ```
-class { ms_defender_atp_agent: onboarding_json_file => 'puppet:///modules/profiles/mtapd_onboard.json' }
+class { microsoft_defender_atp_agent: onboarding_json_file => 'puppet:///modules/profiles/mtapd_onboard.json' }
 ```
 
 Then your roles classes just say `include my_defender_agent`.
@@ -53,7 +53,7 @@ Then your roles classes just say `include my_defender_agent`.
 ### Uninstallation of the agent and onboarding file
 
 ```
-include ms_defender_atp_agent::uninstall
+include microsoft_defender_atp_agent::uninstall
 ```
 
 ## Limitations

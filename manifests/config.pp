@@ -2,9 +2,9 @@
 #
 # @api private
 #
-class ms_defender_atp_agent::config {
+class microsoft_defender_atp_agent::config {
 
-  $directories = lookup('ms_defender_atp_agent::target_json_tree')
+  $directories = lookup('microsoft_defender_atp_agent::target_json_tree')
 
   file { $directories:
     ensure => directory,
@@ -18,8 +18,8 @@ class ms_defender_atp_agent::config {
     owner  => root,
     group  => root,
     mode   => '0755',
-    path   => lookup('ms_defender_atp_agent::target_json_path'),
-    source => $ms_defender_atp_agent::onboarding_json_file,
+    path   => lookup('microsoft_defender_atp_agent::target_json_path'),
+    source => $microsoft_defender_atp_agent::onboarding_json_file,
   }
 
 }

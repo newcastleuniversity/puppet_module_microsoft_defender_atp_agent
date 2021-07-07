@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'ms_defender_atp_agent::install' do
+describe 'microsoft_defender_atp_agent::install' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

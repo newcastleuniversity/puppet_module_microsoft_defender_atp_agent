@@ -8,18 +8,18 @@
 
 #### Public Classes
 
-* [`ms_defender_atp_agent`](#ms_defender_atp_agent): Puppet module to install Microsoft Defender for Endpoint on Linux.
-* [`ms_defender_atp_agent::uninstall`](#ms_defender_atp_agentuninstall): Uninstalls MS Defender ATP agent, removes onboarding file
+* [`microsoft_defender_atp_agent`](#microsoft_defender_atp_agent): Puppet module to install Microsoft Defender for Endpoint on Linux.
+* [`microsoft_defender_atp_agent::uninstall`](#microsoft_defender_atp_agentuninstall): Uninstalls MS Defender ATP agent, removes onboarding file
 
 #### Private Classes
 
-* `ms_defender_atp_agent::config`: This installs the "onboarding" file, aka your Defender site licence.
-* `ms_defender_atp_agent::install`: Install MDATP package
-* `ms_defender_atp_agent::sources`: This sets up the Apt or Yum sources so that your computer or server can install Defender.
+* `microsoft_defender_atp_agent::config`: This installs the "onboarding" file, aka your Defender site licence.
+* `microsoft_defender_atp_agent::install`: Install MDATP package
+* `microsoft_defender_atp_agent::sources`: This sets up the Apt or Yum sources so that your computer or server can install Defender.
 
 ## Classes
 
-### <a name="ms_defender_atp_agent"></a>`ms_defender_atp_agent`
+### <a name="microsoft_defender_atp_agent"></a>`microsoft_defender_atp_agent`
 
 Puppet module to install Microsoft Defender for Endpoint on Linux.
 
@@ -31,12 +31,12 @@ Puppet module to install Microsoft Defender for Endpoint on Linux.
 ##### 
 
 ```puppet
-class { 'ms_defender_atp_agent': onboarding_json_file => 'puppet:///path/to/your/file.json' }
+class { 'microsoft_defender_atp_agent': onboarding_json_file => 'puppet:///path/to/your/file.json' }
 ```
 
 #### Parameters
 
-The following parameters are available in the `ms_defender_atp_agent` class:
+The following parameters are available in the `microsoft_defender_atp_agent` class:
 
 * [`onboarding_json_file`](#onboarding_json_file)
 * [`channel`](#channel)
@@ -56,7 +56,7 @@ Data type: `Optional[Enum['prod','insiders-fast','insiders-slow']]`
 
 The release channel you want to use.
 
-Default value: `lookup('ms_defender_atp_agent::default_channel')`
+Default value: `lookup('microsoft_defender_atp_agent::default_channel')`
 
 ##### <a name="manage_sources"></a>`manage_sources`
 
@@ -64,7 +64,7 @@ Data type: `Optional[Boolean]`
 
 Allows you to manage the repository sources yourself (false) or allow this module to manage them for you (true).
 
-Default value: `lookup('ms_defender_atp_agent::default_manage_sources')`
+Default value: `lookup('microsoft_defender_atp_agent::default_manage_sources')`
 
 ##### <a name="distro"></a>`distro`
 
@@ -72,7 +72,7 @@ Data type: `Optional[String]`
 
 Allows you to override the distro MS say you should state to get the right package. I calculate this for you in Hiera.
 
-Default value: `lookup('ms_defender_atp_agent::default_distro')`
+Default value: `lookup('microsoft_defender_atp_agent::default_distro')`
 
 ##### <a name="version"></a>`version`
 
@@ -82,7 +82,7 @@ Allows you to override the distro version you claim to have to get the right pac
 
 Default value: `$::facts['os']['release']['major']`
 
-### <a name="ms_defender_atp_agentuninstall"></a>`ms_defender_atp_agent::uninstall`
+### <a name="microsoft_defender_atp_agentuninstall"></a>`microsoft_defender_atp_agent::uninstall`
 
 Uninstalls MS Defender ATP agent, removes onboarding file
 
@@ -91,6 +91,6 @@ Uninstalls MS Defender ATP agent, removes onboarding file
 ##### 
 
 ```puppet
-include ms_defender_atp_agent::uninstall
+include microsoft_defender_atp_agent::uninstall
 ```
 
