@@ -1,6 +1,6 @@
 # @summary Puppet module to install Microsoft Defender for Endpoint on Linux.
 #
-# @param onboarding_json_file Source (as in *file* resource attribute called *source*) of the JSON file you extracted from the onboarding package that your Defender manager gave you.
+# @param onboarding_json_file Source (as in *file* resource attribute called *source*) of the JSON file extracted from your site's Defender onboarding package.
 # @param channel The release channel you want to use.
 # @param manage_sources Allows you to manage the repository sources yourself (false) or allow this module to manage them for you (true).
 # @param distro Allows you to override the distro MS say you should state to get the right package. I calculate this for you in Hiera.
@@ -20,7 +20,8 @@ class microsoft_defender_atp_agent (
   Optional[String] $distro                                        = lookup('microsoft_defender_atp_agent::default_distro'),
   Optional[String] $version                                       = $::facts['os']['release']['major'],
   Optional[Enum['prod','insiders-fast','insiders-slow']] $channel = lookup('microsoft_defender_atp_agent::default_channel'), # prod
-  Optional[Boolean] $manage_sources                               = lookup('microsoft_defender_atp_agent::default_manage_sources') # true
+  Optional[Boolean] $manage_sources                               = lookup('microsoft_defender_atp_agent::default_manage_sources'), # true
+  Optional[String] $keyserver                                     = lookup('microsoft_defender_atp_agent::default_keyserver') # hkps://keyserver.ubuntu.com:443
 ) {
 
   # I run a lot of armhf Pis and this endpoint agent won't work on them because the

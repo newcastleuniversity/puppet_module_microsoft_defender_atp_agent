@@ -37,7 +37,16 @@ describe 'microsoft_defender_atp_agent::sources' do
     on_supported_os(ubuntu).each do |_os, os_facts|
       let(:facts) { os_facts }
 
-      it { is_expected.to contain_apt__source('microsoftpackages').with('location' => %r{ubuntu}, 'release' => 'prod') }
+      it {
+        is_expected.to contain_apt__source('microsoftpackages').with(
+          'location' => %r{ubuntu},
+          'release'  => 'prod',
+          'key'      => {
+            'server' => 'hkps://keyserver.ubuntu.com:443',
+            'id'     => 'BC528686B50D79E339D3721CEB3E94ADBE1229CF',
+          },
+        )
+      }
     end
   end
 
@@ -54,7 +63,16 @@ describe 'microsoft_defender_atp_agent::sources' do
     on_supported_os(debian).each do |_os, os_facts|
       let(:facts) { os_facts }
 
-      it { is_expected.to contain_apt__source('microsoftpackages').with('location' => %r{debian}, 'release' => 'prod') }
+      it {
+        is_expected.to contain_apt__source('microsoftpackages').with(
+          'location' => %r{debian},
+          'release'  => 'prod',
+          'key'      => {
+            'server' => 'hkps://keyserver.ubuntu.com:443',
+            'id'     => 'BC528686B50D79E339D3721CEB3E94ADBE1229CF',
+          },
+        )
+      }
     end
   end
 
