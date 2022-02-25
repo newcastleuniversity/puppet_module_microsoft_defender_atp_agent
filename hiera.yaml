@@ -8,6 +8,7 @@ defaults:  # Used for any hierarchy level that omits these keys.
 hierarchy:
   - name: "distro/major release"
     path: "os/%{facts.os.distro.id}/%{facts.os.distro.release.major}.yaml"
+    path: "os/%{facts.operatingsystem}/%{facts.os.distro.release.major}.yaml"
   - name: "distro"
     paths:
       - "os/%{facts.os.distro.id}.yaml"
