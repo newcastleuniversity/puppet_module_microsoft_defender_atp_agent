@@ -19,7 +19,7 @@ class microsoft_defender_atp_agent::sources {
         repos    => 'main',
         key      => {
           'id'     => 'BC528686B50D79E339D3721CEB3E94ADBE1229CF',
-          'server' => 'keyserver.ubuntu.com',
+          'server' => $microsoft_defender_atp_agent::keyserver,
         },
       }
 
