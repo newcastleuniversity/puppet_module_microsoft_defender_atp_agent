@@ -17,11 +17,11 @@ class microsoft_defender_atp_agent (
   # Automatic parameter lookup never works for me so I used lookup(), which also lets me do these very obvious defaults-with-overrides.
   Stdlib::Filesource $onboarding_json_file,
   # If default_distro isn't in the module Hiera, compilation should fail
-  Optional[String] $distro                                        = lookup('microsoft_defender_atp_agent::default_distro'),
-  Optional[String] $version                                       = $::facts['os']['release']['major'],
-  Optional[Enum['prod','insiders-fast','insiders-slow']] $channel = lookup('microsoft_defender_atp_agent::default_channel'), # prod
-  Optional[Boolean] $manage_sources                               = lookup('microsoft_defender_atp_agent::default_manage_sources'), # true
-  Optional[String] $keyserver                                     = lookup('microsoft_defender_atp_agent::default_keyserver') # hkps://keyserver.ubuntu.com:443
+  Optional[String] $distro                                                            = lookup('microsoft_defender_atp_agent::default_distro'),
+  Optional[String] $version                                                           = $::facts['os']['release']['major'],
+  Optional[Enum['prod','insiders-fast','insiders-slow','nightly','testing']] $channel = lookup('microsoft_defender_atp_agent::default_channel'), # prod
+  Optional[Boolean] $manage_sources                                                   = lookup('microsoft_defender_atp_agent::default_manage_sources'), # true
+  Optional[String] $keyserver                                                         = lookup('microsoft_defender_atp_agent::default_keyserver') # hkps://keyserver.ubuntu.com:443
 ) {
 
   # I run a lot of armhf Pis and this endpoint agent won't work on them because the
