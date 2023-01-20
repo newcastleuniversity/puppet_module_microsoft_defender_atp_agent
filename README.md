@@ -27,7 +27,7 @@ The package I got contained a Python file that generated the JSON file.
 
 ### Soft dependencies
 
-- On Debian and derivatives, you need the *puppetlabs/apt* module.
+- On Debian and derivatives, you need the *puppetlabs/apt* module at minimum version 6.2.0
 - On RedHat and derivatives, you need the *puppetlabs/yumrepo_core* module.
 
 ## Usage
