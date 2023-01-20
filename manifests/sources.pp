@@ -11,11 +11,20 @@ class microsoft_defender_atp_agent::sources {
 
     /(debian|ubuntu)/: {
 
+      case $microsoft_defender_atp_agent::channel {
+        'prod': {
+          $real_channel = $::facts['os']['distro']['codename']
+        }
+        default: {
+          $real_channel = $microsoft_defender_atp_agent::channel
+        }
+      }
+
       include apt
 
       apt::source { 'microsoftpackages' :
         location => "https://packages.microsoft.com/${microsoft_defender_atp_agent::distro}/${microsoft_defender_atp_agent::version}/prod",
-        release  => $microsoft_defender_atp_agent::channel,
+        release  => $real_channel,
         repos    => 'main',
         key      => {
           'id'     => 'BC528686B50D79E339D3721CEB3E94ADBE1229CF',

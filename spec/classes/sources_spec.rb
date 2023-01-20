@@ -29,7 +29,7 @@ describe 'microsoft_defender_atp_agent::sources' do
       supported_os: [
         {
           'operatingsystem'        => 'Ubuntu',
-          'operatingsystemrelease' => ['18.04', '20.04'],
+          'operatingsystemrelease' => ['18.04', '20.04', '22.04'],
         },
       ],
     }
@@ -40,7 +40,6 @@ describe 'microsoft_defender_atp_agent::sources' do
       it {
         is_expected.to contain_apt__source('microsoftpackages').with(
           'location' => %r{ubuntu},
-          'release'  => 'prod',
           'key'      => {
             'server' => 'hkps://keyserver.ubuntu.com:443',
             'id'     => 'BC528686B50D79E339D3721CEB3E94ADBE1229CF',
@@ -50,12 +49,29 @@ describe 'microsoft_defender_atp_agent::sources' do
     end
   end
 
+  context 'Ubuntu 22.02 tests' do
+    ubuntu22 = {
+      supported_os: [
+        {
+          'operatingsystem'        => 'Ubuntu',
+          'operatingsystemrelease' => ['22.04'],
+        },
+      ],
+    }
+
+    on_supported_os(ubuntu22).each do |_os, os_facts|
+      let(:facts) { os_facts }
+
+      it { is_expected.to contain_apt__source('microsoftpackages').with('release' => 'jammy') }
+    end
+  end
+
   context 'Debian tests' do
     debian = {
       supported_os: [
         {
           'operatingsystem'        => 'Debian',
-          'operatingsystemrelease' => ['9', '10'],
+          'operatingsystemrelease' => ['9', '10', '11'],
         },
       ],
     }
@@ -66,7 +82,6 @@ describe 'microsoft_defender_atp_agent::sources' do
       it {
         is_expected.to contain_apt__source('microsoftpackages').with(
           'location' => %r{debian},
-          'release'  => 'prod',
           'key'      => {
             'server' => 'hkps://keyserver.ubuntu.com:443',
             'id'     => 'BC528686B50D79E339D3721CEB3E94ADBE1229CF',
