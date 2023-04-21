@@ -17,13 +17,13 @@ class microsoft_defender_atp_agent (
   # Automatic parameter lookup never works for me so I used lookup(), which also lets me do these very obvious defaults-with-overrides.
   Stdlib::Filesource $onboarding_json_file,
   # If default_distro isn't in the module Hiera, compilation should fail
-  Optional[String] $distro                                                            = lookup('microsoft_defender_atp_agent::default_distro'),
-  Optional[String] $version                                                           = $::facts['os']['release']['major'],
-  Optional[Enum['prod','insiders-fast','insiders-slow','nightly','testing']] $channel = lookup('microsoft_defender_atp_agent::default_channel'), # prod
-  Optional[Boolean] $manage_sources                                                   = lookup('microsoft_defender_atp_agent::default_manage_sources'), # true
-  Optional[String] $keyserver                                                         = lookup('microsoft_defender_atp_agent::default_keyserver') # hkps://keyserver.ubuntu.com:443
+  Optional[String] $distro,
+  Optional[String] $version = $::facts['os']['release']['major'],
+  Optional[Enum['prod','insiders-fast','insiders-slow','nightly','testing']] $channel, # prod
+  Optional[Boolean] $manage_sources, # true
+  Optional[String] $sourcename, # microsoftpackages
+  Optional[String] $keyserver # hkps://keyserver.ubuntu.com:443
 ) {
-
   # I run a lot of armhf Pis and this endpoint agent won't work on them because the
   # packages only come as amd64, so I filter out non-amd64 architectures.
   # The Power9 nodes in the HPC won't run the agent either.
@@ -37,22 +37,15 @@ class microsoft_defender_atp_agent (
   contain microsoft_defender_atp_agent::install
 
   case $manage_sources {
-
     false: {
-
       Class[microsoft_defender_atp_agent::config]
       ~> Class[microsoft_defender_atp_agent::install]
-
     }
 
     default: {
-
       Class[microsoft_defender_atp_agent::sources]
       ~> Class[microsoft_defender_atp_agent::config]
       ~> Class[microsoft_defender_atp_agent::install]
-
     }
-
   }
-
 }

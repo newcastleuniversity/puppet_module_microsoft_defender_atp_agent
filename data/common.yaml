@@ -1,8 +1,9 @@
 ---
 
-microsoft_defender_atp_agent::default_channel: prod
-microsoft_defender_atp_agent::default_manage_sources: true
-microsoft_defender_atp_agent::default_keyserver: 'hkps://keyserver.ubuntu.com:443'
+microsoft_defender_atp_agent::channel: prod
+microsoft_defender_atp_agent::manage_sources: true
+microsoft_defender_atp_agent::sourcename: microsoftpackages
+microsoft_defender_atp_agent::keyserver: 'hkps://keyserver.ubuntu.com:443'
 # Shouldn't need to change the below unless MS change something
 microsoft_defender_atp_agent::package_name: mdatp
 microsoft_defender_atp_agent::target_json_path: /etc/opt/microsoft/mdatp/mdatp_onboard.json

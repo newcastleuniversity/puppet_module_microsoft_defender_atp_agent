@@ -3,7 +3,6 @@
 # @api private
 #
 class microsoft_defender_atp_agent::config {
-
   $directories = lookup('microsoft_defender_atp_agent::target_json_tree')
 
   file { $directories:
@@ -21,5 +20,4 @@ class microsoft_defender_atp_agent::config {
     path   => lookup('microsoft_defender_atp_agent::target_json_path'),
     source => $microsoft_defender_atp_agent::onboarding_json_file,
   }
-
 }

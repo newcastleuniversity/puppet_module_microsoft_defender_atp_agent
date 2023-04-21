@@ -6,11 +6,8 @@
 # @see https://github.com/voxpupuli/facterdb
 #
 class microsoft_defender_atp_agent::sources {
-
   case $microsoft_defender_atp_agent::distro {
-
     /(debian|ubuntu)/: {
-
       case $microsoft_defender_atp_agent::channel {
         'prod': {
           $real_channel = $::facts['os']['distro']['codename']
@@ -22,7 +19,7 @@ class microsoft_defender_atp_agent::sources {
 
       include apt
 
-      apt::source { 'microsoftpackages' :
+      apt::source { $microsoft_defender_atp_agent::sourcename :
         location => "https://packages.microsoft.com/${microsoft_defender_atp_agent::distro}/${microsoft_defender_atp_agent::version}/prod",
         release  => $real_channel,
         repos    => 'main',
@@ -31,24 +28,20 @@ class microsoft_defender_atp_agent::sources {
           'server' => $microsoft_defender_atp_agent::keyserver,
         },
       }
-
     }
 
     /(centos|rhel)/: {
-
-      yumrepo { 'microsoftpackages' :
+      yumrepo { $microsoft_defender_atp_agent::sourcename :
         baseurl  => "https://packages.microsoft.com/${microsoft_defender_atp_agent::distro}/${microsoft_defender_atp_agent::version}/${microsoft_defender_atp_agent::channel}",
         descr    => "packages-microsoft-com-prod-${microsoft_defender_atp_agent::channel}",
         enabled  => 1,
         gpgcheck => 1,
-        gpgkey   => 'https://packages.microsoft.com/keys/microsoft.asc'
+        gpgkey   => 'https://packages.microsoft.com/keys/microsoft.asc',
       }
     }
 
     default: {
       fail('Your GNU/Linux distribution is not supported.') # Should never get to this, install.pp should have already failed compilation
     }
-
   }
-
 }
