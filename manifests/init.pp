@@ -14,7 +14,6 @@
 #   class { 'microsoft_defender_atp_agent': onboarding_json_file => 'puppet:///path/to/your/file.json' }
 #
 class microsoft_defender_atp_agent (
-  # Automatic parameter lookup never works for me so I used lookup(), which also lets me do these very obvious defaults-with-overrides.
   Stdlib::Filesource $onboarding_json_file,
   # If default_distro isn't in the module Hiera, compilation should fail
   Optional[String] $distro,
