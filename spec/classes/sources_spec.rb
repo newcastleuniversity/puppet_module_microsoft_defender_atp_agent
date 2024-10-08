@@ -139,7 +139,7 @@ describe 'microsoft_defender_atp_agent::sources' do
       ],
     }
 
-    on_supported_os(oraclelinux).each do |_os, os_facts|
+    on_supported_os(ol).each do |_os, os_facts|
       let(:facts) { os_facts }
 
       it { is_expected.to contain_yumrepo('microsoftpackages').with('baseurl' => %r{oraclelinux}) }
