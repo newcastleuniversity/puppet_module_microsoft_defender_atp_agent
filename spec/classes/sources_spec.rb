@@ -115,10 +115,6 @@ describe 'microsoft_defender_atp_agent::sources' do
             'operatingsystemrelease' => ['7', '8'],
           },
           {
-            'operatingsystem'        => 'OracleLinux',
-            'operatingsystemrelease' => ['7', '8', '9'],
-          },
-          {
             'operatingsystem'        => 'CentOS',
             'operatingsystemrelease' => ['8'],
           },
@@ -132,6 +128,24 @@ describe 'microsoft_defender_atp_agent::sources' do
       end # on_supported_os
     end # RHEL tests
   end # Bare essential parameters
+
+  context 'OracleLinux tests' do
+    rhel = {
+      supported_os: [
+        {
+          'operatingsystem'        => 'OracleLinux',
+          'operatingsystemrelease' => ['7', '8', '9'],
+        },
+      ],
+    }
+
+    on_supported_os(oraclelinux).each do |_os, os_facts|
+      let(:facts) { os_facts }
+
+      it { is_expected.to contain_yumrepo('microsoftpackages').with('baseurl' => %r{oraclelinux}) }
+    end # on_supported_os
+  end # OracleLinux tests
+end # Bare essential parameters
 
   context 'Ubuntu tests with custom source filename' do
     let(:pre_condition) do
