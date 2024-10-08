@@ -115,6 +115,10 @@ describe 'microsoft_defender_atp_agent::sources' do
             'operatingsystemrelease' => ['7', '8'],
           },
           {
+            'operatingsystem'        => 'OracleLinux',
+            'operatingsystemrelease' => ['7', '8', '9'],
+          },
+          {
             'operatingsystem'        => 'CentOS',
             'operatingsystemrelease' => ['8'],
           },
