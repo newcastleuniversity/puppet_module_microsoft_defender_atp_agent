@@ -1,3 +1,3 @@
 ---
 
-microsoft_defender_atp_agent::distro: oraclelinux
+microsoft_defender_atp_agent::distro: rhel

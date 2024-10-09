@@ -30,7 +30,7 @@ class microsoft_defender_atp_agent::sources {
       }
     }
 
-    /(centos|rhel|oraclelinux)/: {
+    /(centos|rhel)/: {
       yumrepo { $microsoft_defender_atp_agent::sourcename :
         baseurl  => "https://packages.microsoft.com/${microsoft_defender_atp_agent::distro}/${microsoft_defender_atp_agent::version}/${microsoft_defender_atp_agent::channel}",
         descr    => "packages-microsoft-com-prod-${microsoft_defender_atp_agent::channel}",
